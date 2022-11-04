@@ -10,6 +10,7 @@ public class ControllerInput : MonoBehaviour
     public SteamVR_Action_Boolean OpenMenu;
     public SteamVR_Action_Boolean GrabGrip;
     public SteamVR_Input_Sources handType;
+    private static int distance = 3;
 
     public GameObject DoorLeft;
     public GameObject DoorRight;
@@ -85,7 +86,7 @@ public class ControllerInput : MonoBehaviour
         if (wandController.grabWand == true && doorClosed == true && scrolls.currentUsingMagic==0) //wand는 오른손에 들고 x key를 눌러야 가능
         {
             float dist = Vector3.Distance(DoorLeft.transform.position, Player.transform.position);
-            if (dist < 2)
+            if (dist < distance)
             {
                 DoorLeft.transform.Rotate(0, 90, 0);
                 DoorRight.transform.Rotate(0, -90, 0);
@@ -96,7 +97,7 @@ public class ControllerInput : MonoBehaviour
         if (wandController.grabWand == true && !mirrorWrited && scrolls.currentUsingMagic == 1) //wand는 오른손에 들고 x key를 눌러야 가능
         {
             float dist = Vector3.Distance(mirrorTMP.transform.position, Player.transform.position);
-            if (dist < 2)
+            if (dist < distance)
             {
                 mirrorTMP.SetActive(true);
                 mirrorWrited = true;
@@ -122,7 +123,7 @@ public class ControllerInput : MonoBehaviour
         if (wandController.grabWand == true && !recipeSeen && scrolls.currentUsingMagic == 3) //wand는 오른손에 들고 x key를 눌러야 가능
         {
             float dist = Vector3.Distance(hidePaper.transform.position, Player.transform.position);
-            if (dist < 2)
+            if (dist < distance)
             {
                 hidePaper.SetActive(false);
                 recipeSeen = true;
@@ -133,7 +134,7 @@ public class ControllerInput : MonoBehaviour
         if (wandController.grabWand == true && !hasTransform && scrolls.currentUsingMagic == 4) //wand는 오른손에 들고 x key를 눌러야 가능
         {
             float dist = Vector3.Distance(airTotem.transform.position, Player.transform.position);
-            if (dist < 2)
+            if (dist < distance)
             {
                 finalKey_s.SetActive(false);
                 airTotem.SetActive(false);

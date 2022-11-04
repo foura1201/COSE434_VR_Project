@@ -16,10 +16,15 @@ public class ButtonManager : MonoBehaviour
     public GameObject scrollsManager;
     private Scrolls scrolls;
 
+    private bool hoverOn = false;
+
+    public SteamVR_Action_Boolean GrabPinch;
+    public SteamVR_Input_Sources handType1;
 
     // Start is called before the first frame update
     void Start()
     {
+        GrabPinch.AddOnStateDownListener(ButtonDown, handType1);
         scrolls = scrollsManager.GetComponent<Scrolls>();
         SelectButton();
     }
@@ -28,14 +33,6 @@ public class ButtonManager : MonoBehaviour
     void Update()
     {
         
-    }
-
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("OnCollisionEnter");
-        scrolls.currentUsingMagic = magicType;
-        SelectButton();
     }
 
     public void SelectButton()
@@ -49,8 +46,20 @@ public class ButtonManager : MonoBehaviour
 
     private void OnHandHoverBegin(Hand hand)
     {
-        Debug.Log("HoverOn");
-        scrolls.currentUsingMagic = magicType;
-        SelectButton();
+        hoverOn = true;
+    }
+
+    private void OnHandHoverEnd(Hand hand)
+    {
+        hoverOn = false;
+    }
+
+    private void ButtonDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        if (hoverOn)
+        {
+            scrolls.currentUsingMagic = magicType;
+            SelectButton();
+        }
     }
 }
